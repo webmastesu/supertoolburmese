@@ -9,117 +9,188 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background-color: #f0f2f5;
+            background: linear-gradient(135deg, #f6f8fd 0%, #f1f4f9 100%);
+            min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        h1 {
+        .header {
             text-align: center;
-            color: #333;
-            margin-bottom: 30px;
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 2px;
+        }
+
+        h1 {
+            color: #1f2937;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .category {
             background: white;
-            border-radius: 8px;
+            border-radius: 16px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease;
+        }
+
+        .category:hover {
+            transform: translateY(-2px);
         }
 
         .category-header {
-            padding: 15px 20px;
-            background: #f8f9fa;
-            border-radius: 8px 8px 0 0;
+            padding: 20px 24px;
+            background: rgba(249, 250, 251, 0.8);
+            border-radius: 16px 16px 0 0;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: background-color 0.2s ease;
+        }
+
+        .category-header:hover {
+            background: rgba(243, 244, 246, 0.9);
         }
 
         .category-header h2 {
-            font-size: 1.2rem;
-            color: #333;
+            font-size: 1.25rem;
+            color: #374151;
+            font-weight: 600;
         }
 
         .category-content {
             display: none;
             padding: 20px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         .category.active .category-content {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .sound-item {
             display: flex;
             align-items: center;
-            padding: 12px;
-            border-radius: 6px;
-            background: #f8f9fa;
-            margin-bottom: 10px;
+            padding: 16px;
+            border-radius: 12px;
+            background: #f9fafb;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .sound-item:hover {
+            background: #f3f4f6;
+            transform: scale(1.01);
         }
 
         .sound-title {
             flex: 1;
             margin-right: 15px;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            color: #4b5563;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 300px;
         }
 
         .controls {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
-        button {
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        .btn {
+            background: white;
             border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.2s, transform 0.2s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
-        button:hover {
-            background: linear-gradient(135deg, #feb47b, #ff7e5f);
-            transform: scale(1.1);
+        .btn-play {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
         }
 
-        button img {
-            width: 16px;
-            height: 16px;
+        .btn-download {
+            background: white;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .btn-download img {
+            filter: none;
         }
 
         #error-message {
-            color: red;
+            color: #ef4444;
             text-align: center;
             margin: 20px;
-            padding: 10px;
-            background: #fee;
-            border-radius: 4px;
+            padding: 16px;
+            background: #fef2f2;
+            border-radius: 12px;
+            border: 1px solid #fee2e2;
             display: none;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 480px) {
+        @media (max-width: 640px) {
             body {
-                padding: 10px;
+                padding: 12px;
+            }
+
+            .header {
+                padding: 1.5rem 0;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .category-header {
+                padding: 16px 20px;
             }
 
             .category-header h2 {
@@ -127,31 +198,37 @@
             }
 
             .sound-item {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
+                padding: 12px;
+                flex-direction: row;
+                align-items: center;
             }
 
             .sound-title {
-                margin-right: 0;
-                margin-bottom: 10px;
-                max-width: 100%;
+                font-size: 0.95rem;
+                max-width: 180px;
             }
 
             .controls {
-                justify-content: center;
-                width: 100%;
+                gap: 8px;
             }
 
-            .sound-title {
-                max-width: calc(100% - 100px); /* Shorten title in mobile view */
+            .btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .btn img {
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Sound Library</h1>
+        <div class="header">
+            <h1>Sound Library</h1>
+        </div>
         <div id="error-message"></div>
         <div id="categories-container">
             <!-- Categories will be populated by JavaScript -->
@@ -175,7 +252,6 @@
                 }
                 
                 const data = await response.json();
-                console.log('Fetched data:', data); // Debug log
                 
                 if (data && Array.isArray(data)) {
                     displaySounds(data);
@@ -185,14 +261,19 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                errorDiv.textContent = `Error loading sounds: ${error.message}. Please check the console for more details.`;
+                errorDiv.textContent = `Error loading sounds: ${error.message}`;
                 errorDiv.style.display = 'block';
             }
         }
 
+        function truncateTitle(title, maxLength = 30) {
+            if (title.length <= maxLength) return title;
+            return title.substring(0, maxLength) + '...';
+        }
+
         function displaySounds(data) {
             const container = document.getElementById('categories-container');
-            container.innerHTML = ''; // Clear existing content
+            container.innerHTML = '';
             
             data.forEach(category => {
                 const categoryDiv = document.createElement('div');
@@ -206,12 +287,12 @@
                     <div class="category-content">
                         ${category.Sounds.map(sound => `
                             <div class="sound-item">
-                                <div class="sound-title">${sound.Title}</div>
+                                <div class="sound-title" title="${sound.Title}">${truncateTitle(sound.Title)}</div>
                                 <div class="controls">
-                                    <button onclick="playSound('${sound.Link}')" title="Play">
+                                    <button class="btn btn-play" onclick="playSound('${sound.Link}')" title="Play">
                                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='5 3 19 12 5 21 5 3'%3E%3C/polygon%3E%3C/svg%3E" alt="Play">
                                     </button>
-                                    <button onclick="downloadSound('${sound.Link}', '${sound.Title}')" title="Download">
+                                    <button class="btn btn-download" onclick="downloadSound('${sound.Link}', '${sound.Title}')" title="Download">
                                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='7 10 12 15 17 10'%3E%3C/polyline%3E%3Cline x1='12' y1='15' x2='12' y2='3'%3E%3C/line%3E%3C/svg%3E" alt="Download">
                                     </button>
                                 </div>
@@ -255,7 +336,12 @@
             currentAudio = new Audio(url);
             currentAudio.play().catch(error => {
                 console.error('Error playing sound:', error);
-                alert('Error playing sound. Please check the console for details.');
+                const errorDiv = document.getElementById('error-message');
+                errorDiv.textContent = 'Error playing sound. Please try again.';
+                errorDiv.style.display = 'block';
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 3000);
             });
             
             currentAudio.onended = function() {
