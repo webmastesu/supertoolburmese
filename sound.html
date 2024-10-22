@@ -27,104 +27,123 @@
             text-align: center;
             padding: 2rem 0;
             position: relative;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #6366f1, #8b5cf6);
-            border-radius: 2px;
-        }
-
-        h1 {
-            color: #1f2937;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .category {
-            background: white;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-                        0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.2s ease;
-        }
-
-        .category:hover {
-            transform: translateY(-2px);
-        }
-
-        .category-header {
-            padding: 20px 24px;
-            background: rgba(249, 250, 251, 0.8);
-            border-radius: 16px 16px 0 0;
-            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            transition: background-color 0.2s ease;
+            justify-content: center;
+            gap: 1rem;
         }
 
-        .category-header:hover {
-            background: rgba(243, 244, 246, 0.9);
+        .back-button {
+            position: absolute;
+            left: 0;
+            background: white;
+            border: none;
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .category-header h2 {
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-title {
+            color: #1f2937;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-icon img {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+
+        .category-name {
             font-size: 1.25rem;
             color: #374151;
             font-weight: 600;
         }
 
-        .category-content {
+        .sound-list {
             display: none;
-            padding: 20px;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .category.active .category-content {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px 0;
         }
 
         .sound-item {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
             display: flex;
             align-items: center;
-            padding: 16px;
-            border-radius: 12px;
-            background: #f9fafb;
-            margin-bottom: 12px;
+            justify-content: space-between;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .sound-item:hover {
-            background: #f3f4f6;
-            transform: scale(1.01);
+            transform: translateX(4px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .sound-title {
-            flex: 1;
-            margin-right: 15px;
             font-size: 1rem;
             color: #4b5563;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 300px;
+            max-width: 200px;
         }
 
         .controls {
             display: flex;
-            gap: 12px;
+            gap: 8px;
         }
 
         .btn {
@@ -185,27 +204,22 @@
                 padding: 1.5rem 0;
             }
 
-            h1 {
-                font-size: 2rem;
+            .page-title {
+                font-size: 1.75rem;
             }
 
-            .category-header {
-                padding: 16px 20px;
-            }
-
-            .category-header h2 {
-                font-size: 1.1rem;
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
             }
 
             .sound-item {
                 padding: 12px;
-                flex-direction: row;
-                align-items: center;
             }
 
             .sound-title {
                 font-size: 0.95rem;
-                max-width: 180px;
+                max-width: 160px;
             }
 
             .controls {
@@ -227,16 +241,23 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Sound Library</h1>
+            <button class="back-button" onclick="showCategories()">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='19' y1='12' x2='5' y2='12'%3E%3C/line%3E%3Cpolyline points='12 19 5 12 12 5'%3E%3C/polyline%3E%3C/svg%3E" alt="Back">
+            </button>
+            <h1 class="page-title">Sound Library</h1>
         </div>
         <div id="error-message"></div>
-        <div id="categories-container">
-            <!-- Categories will be populated by JavaScript -->
+        <div id="categories-grid" class="categories-grid">
+            <!-- Categories will be populated here -->
+        </div>
+        <div id="sound-list" class="sound-list">
+            <!-- Sounds will be populated here -->
         </div>
     </div>
 
     <script>
-        // Fetch and display the sounds
+        let soundData = [];
+
         async function fetchSounds() {
             const errorDiv = document.getElementById('error-message');
             try {
@@ -254,7 +275,8 @@
                 const data = await response.json();
                 
                 if (data && Array.isArray(data)) {
-                    displaySounds(data);
+                    soundData = data;
+                    displayCategories();
                     errorDiv.style.display = 'none';
                 } else {
                     throw new Error('Invalid data format received');
@@ -271,58 +293,57 @@
             return title.substring(0, maxLength) + '...';
         }
 
-        function displaySounds(data) {
-            const container = document.getElementById('categories-container');
-            container.innerHTML = '';
+        function displayCategories() {
+            const container = document.getElementById('categories-grid');
+            const soundList = document.getElementById('sound-list');
+            const backButton = document.querySelector('.back-button');
             
-            data.forEach(category => {
-                const categoryDiv = document.createElement('div');
-                categoryDiv.className = 'category';
-                
-                categoryDiv.innerHTML = `
-                    <div class="category-header" onclick="toggleCategory(this)">
-                        <h2>${category.Category}</h2>
-                        <span class="toggle">▼</span>
+            container.style.display = 'grid';
+            soundList.style.display = 'none';
+            backButton.style.display = 'none';
+            document.querySelector('.page-title').textContent = 'Sound Library';
+            
+            container.innerHTML = soundData.map(category => `
+                <div class="category-card" onclick="showSounds('${category.Category}')">
+                    <div class="category-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18V5l12-2v13'%3E%3C/path%3E%3Ccircle cx='6' cy='18' r='3'%3E%3C/circle%3E%3Ccircle cx='18' cy='16' r='3'%3E%3C/circle%3E%3C/svg%3E" alt="Music">
                     </div>
-                    <div class="category-content">
-                        ${category.Sounds.map(sound => `
-                            <div class="sound-item">
-                                <div class="sound-title" title="${sound.Title}">${truncateTitle(sound.Title)}</div>
-                                <div class="controls">
-                                    <button class="btn btn-play" onclick="playSound('${sound.Link}')" title="Play">
-                                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='5 3 19 12 5 21 5 3'%3E%3C/polygon%3E%3C/svg%3E" alt="Play">
-                                    </button>
-                                    <button class="btn btn-download" onclick="downloadSound('${sound.Link}', '${sound.Title}')" title="Download">
-                                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='7 10 12 15 17 10'%3E%3C/polyline%3E%3Cline x1='12' y1='15' x2='12' y2='3'%3E%3C/line%3E%3C/svg%3E" alt="Download">
-                                    </button>
-                                </div>
-                            </div>
-                        `).join('')}
+                    <h2 class="category-name">${category.Category}</h2>
+                </div>
+            `).join('');
+        }
+
+        function showSounds(categoryName) {
+            const container = document.getElementById('categories-grid');
+            const soundList = document.getElementById('sound-list');
+            const backButton = document.querySelector('.back-button');
+            const category = soundData.find(cat => cat.Category === categoryName);
+            
+            container.style.display = 'none';
+            soundList.style.display = 'flex';
+            backButton.style.display = 'flex';
+            document.querySelector('.page-title').textContent = categoryName;
+            
+            soundList.innerHTML = category.Sounds.map(sound => `
+                <div class="sound-item">
+                    <div class="sound-title" title="${sound.Title}">${truncateTitle(sound.Title)}</div>
+                    <div class="controls">
+                        <button class="btn btn-play" onclick="playSound('${sound.Link}')" title="Play">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='5 3 19 12 5 21 5 3'%3E%3C/polygon%3E%3C/svg%3E" alt="Play">
+                        </button>
+                        <button class="btn btn-download" onclick="downloadSound('${sound.Link}', '${sound.Title}')" title="Download">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='7 10 12 15 17 10'%3E%3C/polyline%3E%3Cline x1='12' y1='15' x2='12' y2='3'%3E%3C/line%3E%3C/svg%3E" alt="Download">
+                        </button>
                     </div>
-                `;
-                
-                container.appendChild(categoryDiv);
-            });
+                </div>
+            `).join('');
+        }
+
+        function showCategories() {
+            displayCategories();
         }
 
         let currentAudio = null;
-
-        function toggleCategory(header) {
-            const category = header.parentElement;
-            const wasActive = category.classList.contains('active');
-            
-            // Close all categories
-            document.querySelectorAll('.category').forEach(cat => {
-                cat.classList.remove('active');
-                cat.querySelector('.toggle').textContent = '▼';
-            });
-            
-            // If the clicked category wasn't active, open it
-            if (!wasActive) {
-                category.classList.add('active');
-                header.querySelector('.toggle').textContent = '▲';
-            }
-        }
 
         function playSound(url) {
             if (currentAudio) {
