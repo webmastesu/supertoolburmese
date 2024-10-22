@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4a90e2">
+    <meta name="description" content="A modern PWA with feature buttons">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="PWA App">
+    
+    <!-- Manifest and Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-72x72.png">
+    
+    <title>Modern PWA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000103 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 12px;
+        }
+
+        .navbar {
+            background: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            color: #333;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .search-icon:hover {
+            color: #4a90e2;
+        }
+
+        .search-input {
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            padding: 0;
+            border: none;
+            border-radius: 20px;
+            background: #f5f5f5;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .search-input.active {
+            width: 200px;
+            padding: 8px 16px;
+            margin-right: 8px;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 100;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #4a90e2;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem;
+        }
+
+        .feature-button {
+            background: white;
+            border: none;
+            padding: 1.2rem 0.8rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-button.hidden {
+            display: none;
+        }
+
+        .feature-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-button:active {
+            transform: translateY(0);
+        }
+
+        .feature-button i {
+            font-size: 1.8rem;
+            color: #4a90e2;
+        }
+
+        .feature-button span {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .button-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+
+            .feature-button {
+                padding: 1.5rem;
+            }
+
+            .feature-button span {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-list {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
+                background: white;
+                flex-direction: column;
+                padding: 4rem 2rem;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                z-index: 90;
+            }
+
+            .nav-list.active {
+                left: 0;
+            }
+
+            .search-input.active {
+                width: 150px;
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 80;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                padding: 8px;
+            }
+
+            .feature-button {
+                padding: 1rem 0.6rem;
+            }
+
+            .feature-button i {
+                font-size: 1.5rem;
+            }
+
+            .feature-button span {
+                font-size: 0.8rem;
+            }
+
+            .search-input.active {
+                width: 120px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="overlay"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-list">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">Policy</a></li>
+                <li><a href="#" class="nav-link">About</a></li>
+            </ul>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+    </nav>
+
+    <div class="button-grid">
+        <button class="feature-button" onclick="window.location.href='https://myanmarmeme.pages.dev/'">
+            <i class="fas fa-images"></i>
+            <span>Images</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='/sound.html'">
+            <i class="fas fa-volume-up"></i>
+            <span>Sound</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-video"></i>
+            <span>Video</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-sticky-note"></i>
+            <span>Sticker</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-smile"></i>
+            <span>Emoji</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-magic"></i>
+            <span>Generator</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='https://myanmarmeme.pages.dev/'">
+            <i class="fas fa-images"></i>
+            <span>Images</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='https://meme-7o4.pages.dev/'">
+            <i class="fas fa-volume-up"></i>
+            <span>Sound</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-video"></i>
+            <span>Video</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-sticky-note"></i>
+            <span>Sticker</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-smile"></i>
+            <span>Emoji</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-magic"></i>
+            <span>Generator</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-smile"></i>
+            <span>Emoji</span>
+        </button>
+        <button class="feature-button" onclick="window.location.href='#'">
+            <i class="fas fa-magic"></i>
+            <span>Generator</span>
+        </button>
+    </div>
+
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful');
+                }).catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        // Hamburger Menu Functionality
+        const hamburger = document.querySelector('.hamburger');
+        const navList = document.querySelector('.nav-list');
+        const overlay = document.querySelector('.overlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navList.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navList.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        });
+
+        // Search Functionality
+        const searchIcon = document.querySelector('.search-icon');
+        const searchInput = document.querySelector('.search-input');
+        const featureButtons = document.querySelectorAll('.feature-button');
+
+        searchIcon.addEventListener('click', () => {
+            searchInput.classList.toggle('active');
+            if (searchInput.classList.contains('active')) {
+                searchInput.focus();
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const searchText = e.target.value.toLowerCase();
+            
+            featureButtons.forEach(button => {
+                const buttonText = button.querySelector('span').textContent.toLowerCase();
+                if (buttonText.includes(searchText)) {
+                    button.classList.remove('hidden');
+                } else {
+                    button.classList.add('hidden');
+                }
+            });
+        });
+
+        // Close search on click outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                searchInput.classList.remove('active');
+            }
+        });
+
+        // Prevent search close when clicking inside search container
+        searchInput.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>
