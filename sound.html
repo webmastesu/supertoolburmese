@@ -72,6 +72,9 @@
             flex: 1;
             margin-right: 15px;
             font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .controls {
@@ -80,8 +83,8 @@
         }
 
         button {
-            background: #fff;
-            border: 1px solid #ddd;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border: none;
             border-radius: 50%;
             width: 36px;
             height: 36px;
@@ -89,11 +92,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         button:hover {
-            background: #f0f0f0;
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+            transform: scale(1.1);
         }
 
         button img {
@@ -130,10 +135,16 @@
             .sound-title {
                 margin-right: 0;
                 margin-bottom: 10px;
+                max-width: 100%;
             }
 
             .controls {
                 justify-content: center;
+                width: 100%;
+            }
+
+            .sound-title {
+                max-width: calc(100% - 100px); /* Shorten title in mobile view */
             }
         }
     </style>

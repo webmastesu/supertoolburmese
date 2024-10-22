@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="memegen/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Meme Generator</h1>
+        <div class="meme-generator">
+            <input type="file" id="imageInput" accept="image/*">
+            <canvas id="memeCanvas"></canvas>
+        </div>
+        <div class="text-options">
+            <input type="text" id="textInput" placeholder="Enter text">
+            <button id="addText">Add Text</button>
+        </div>
+        <div class="controls">
+            <button id="generateMeme">Generate Meme</button>
+            <button id="saveMeme">Save Meme</button>
+        </div>
+    </div>
+    <script src="memegen/script.js"></script>
+</body>
+</html>
