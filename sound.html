@@ -183,6 +183,8 @@
 
         .btn-play {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-download {
@@ -198,11 +200,48 @@
         .btn img {
             width: 20px;
             height: 20px;
+        }
+
+        .btn-play img {
             filter: brightness(0) invert(1);
         }
 
         .btn-download img {
             filter: none;
+        }
+
+        /* Wave Animation Styles */
+        .wave-animation {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+        }
+
+        .wave-bar {
+            position: absolute;
+            bottom: 0;
+            width: 3px;
+            background: white;
+            animation: waveMove 1s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) { left: 0; height: 60%; animation-delay: 0.2s; }
+        .wave-bar:nth-child(2) { left: 6px; height: 80%; animation-delay: 0.4s; }
+        .wave-bar:nth-child(3) { left: 12px; height: 100%; animation-delay: 0.1s; }
+        .wave-bar:nth-child(4) { left: 18px; height: 70%; animation-delay: 0.3s; }
+
+        @keyframes waveMove {
+            0% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+            100% { transform: scaleY(0.5); }
+        }
+
+        .play-icon {
+            transition: opacity 0.3s ease;
         }
 
         #error-message {
@@ -217,48 +256,48 @@
         }
 
         @media (max-width: 640px) {
-    .categories-grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 12px;
-        padding: 1px;
-    }
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 12px;
+                padding: 1px;
+            }
 
-    .category-card {
-        padding: 1px;
-        flex-direction: column;
-        text-align: center;
-        min-height: 120px;
-        width: 100%;
-    }
+            .category-card {
+                padding: 1px;
+                flex-direction: column;
+                text-align: center;
+                min-height: 120px;
+                width: 100%;
+            }
 
-    .category-content {
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-    }
+            .category-content {
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+            }
 
-    .category-icon {
-        margin: 0 0 8px 0;
-        width: 36px;
-        height: 36px;
-    }
+            .category-icon {
+                margin: 0 0 8px 0;
+                width: 36px;
+                height: 36px;
+            }
 
-    .category-icon img {
-        width: 18px;
-        height: 18px;
-    }
+            .category-icon img {
+                width: 18px;
+                height: 18px;
+            }
 
-    .category-name {
-        font-size: 0.9rem;
-        margin: 0;
-        max-width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding: 0 4px;
-    }
+            .category-name {
+                font-size: 0.9rem;
+                margin: 0;
+                max-width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 4px;
+            }
 
-    .chevron-icon {
+            .chevron-icon {
                 position: absolute;
                 top: 12px;
                 right: 12px;
@@ -266,37 +305,51 @@
                 height: 16px;
             }
 
-    .container {
-        padding: 8px;
-    }
+            .container {
+                padding: 8px;
+            }
 
-    .header {
-        padding: 1rem 0;
-    }
+            .header {
+                padding: 1rem 0;
+            }
 
-    .page-title {
-        font-size: 1.5rem;
-    }
+            .page-title {
+                font-size: 1.5rem;
+            }
 
-    .sound-item {
-        padding: 10px;
-    }
+            .sound-item {
+                padding: 10px;
+            }
 
-    .sound-title {
-        font-size: 0.9rem;
-        max-width: 140px;
-    }
+            .sound-title {
+                font-size: 0.9rem;
+                max-width: 140px;
+            }
 
-    .btn {
-        width: 36px;
-        height: 36px;
-    }
+            .btn {
+                width: 36px;
+                height: 36px;
+            }
 
-    .btn img {
-        width: 16px;
-        height: 16px;
-    }
-}
+            .btn img {
+                width: 16px;
+                height: 16px;
+            }
+
+            .wave-animation {
+                width: 18px;
+                height: 18px;
+            }
+
+            .wave-bar {
+                width: 2px;
+            }
+
+            .wave-bar:nth-child(1) { left: 0; }
+            .wave-bar:nth-child(2) { left: 5px; }
+            .wave-bar:nth-child(3) { left: 10px; }
+            .wave-bar:nth-child(4) { left: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -378,61 +431,89 @@
         }
 
         function showSounds(categoryName) {
-            const container = document.getElementById('categories-grid');
-            const soundList = document.getElementById('sound-list');
-            const backButton = document.querySelector('.back-button');
-            const category = soundData.find(cat => cat.Category === categoryName);
-            
-            container.style.display = 'none';
-            soundList.style.display = 'flex';
-            backButton.style.display = 'flex';
-            document.querySelector('.page-title').textContent = categoryName;
-            
-            soundList.innerHTML = category.Sounds.map(sound => `
-                <div class="sound-item">
-                    <div class="sound-title" title="${sound.Title}">${truncateTitle(sound.Title)}</div>
-                    <div class="controls">
-                        <button class="btn btn-play" onclick="playSound('${sound.Link}')" title="Play">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='5 3 19 12 5 21 5 3'%3E%3C/polygon%3E%3C/svg%3E" alt="Play">
-                        </button>
-                        <button class="btn btn-download" onclick="downloadSound('${sound.Link}', '${sound.Title}')" title="Download">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='7 10 12 15 17 10'%3E%3C/polyline%3E%3Cline x1='12' y1='15' x2='12' y2='3'%3E%3C/line%3E%3C/svg%3E" alt="Download">
-                        </button>
+    const container = document.getElementById('categories-grid');
+    const soundList = document.getElementById('sound-list');
+    const backButton = document.querySelector('.back-button');
+    const category = soundData.find(cat => cat.Category === categoryName);
+    
+    container.style.display = 'none';
+    soundList.style.display = 'flex';
+    backButton.style.display = 'flex';
+    document.querySelector('.page-title').textContent = categoryName;
+    
+    soundList.innerHTML = category.Sounds.map(sound => `
+        <div class="sound-item">
+            <div class="sound-title" title="${sound.Title}">${truncateTitle(sound.Title)}</div>
+            <div class="controls">
+                <button class="btn btn-play" onclick="playSound('${sound.Link}', this)" title="Play">
+                    <img class="play-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='5 3 19 12 5 21 5 3'%3E%3C/polygon%3E%3C/svg%3E" alt="Play">
+                    <div class="wave-animation">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
                     </div>
-                </div>
-            `).join('');
-        }
+                </button>
+                <button class="btn btn-download" onclick="downloadSound('${sound.Link}', '${sound.Title}')" title="Download">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='7 10 12 15 17 10'%3E%3C/polyline%3E%3Cline x1='12' y1='15' x2='12' y2='3'%3E%3C/line%3E%3C/svg%3E" alt="Download">
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
 
         function showCategories() {
             displayCategories();
         }
 
         let currentAudio = null;
+let currentPlayButton = null;
 
-        function playSound(url) {
-            if (currentAudio) {
-                currentAudio.pause();
-                if (currentAudio.src === url) {
-                    currentAudio = null;
-                    return;
-                }
-            }
-            
-            currentAudio = new Audio(url);
-            currentAudio.play().catch(error => {
-                console.error('Error playing sound:', error);
-                const errorDiv = document.getElementById('error-message');
-                errorDiv.textContent = 'Error playing sound. Please try again.';
-                errorDiv.style.display = 'block';
-                setTimeout(() => {
-                    errorDiv.style.display = 'none';
-                }, 3000);
-            });
-            
-            currentAudio.onended = function() {
-                currentAudio = null;
-            };
+function playSound(url, buttonElement) {
+    const playIcon = buttonElement.querySelector('.play-icon');
+    const waveAnimation = buttonElement.querySelector('.wave-animation');
+    
+    // If there's already a playing sound
+    if (currentAudio) {
+        // Stop current animation
+        if (currentPlayButton) {
+            currentPlayButton.querySelector('.play-icon').style.opacity = '1';
+            currentPlayButton.querySelector('.wave-animation').style.display = 'none';
         }
+        
+        currentAudio.pause();
+        if (currentPlayButton === buttonElement) {
+            currentAudio = null;
+            currentPlayButton = null;
+            return;
+        }
+    }
+    
+    // Play new sound
+    currentAudio = new Audio(url);
+    currentPlayButton = buttonElement;
+    
+    currentAudio.play().catch(error => {
+        console.error('Error playing sound:', error);
+        const errorDiv = document.getElementById('error-message');
+        errorDiv.textContent = 'Error playing sound. Please try again.';
+        errorDiv.style.display = 'block';
+        setTimeout(() => {
+            errorDiv.style.display = 'none';
+        }, 3000);
+    });
+    
+    // Show animation
+    playIcon.style.opacity = '0';
+    waveAnimation.style.display = 'block';
+    
+    currentAudio.onended = function() {
+        playIcon.style.opacity = '1';
+        waveAnimation.style.display = 'none';
+        currentAudio = null;
+        currentPlayButton = null;
+    };
+}
 
         function downloadSound(url, title) {
             const link = document.createElement('a');
